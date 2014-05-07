@@ -21,13 +21,34 @@ public class Chapter2 {
     //Exercise 2
     public static void exercise2() throws URISyntaxException, IOException {
         System.out.println("Exercise 2");
-        String contents = new String(Files.readAllBytes(new File(Chapter2.class.getClassLoader().getResource("alice.txt").toURI()).toPath()), StandardCharsets.UTF_8);
-        List<String> words = Arrays.asList(contents.split("[\\P{L}]+"));
+        List<String> words = getWordsFromFile("alice.txt");
 
         words.stream().filter(w -> {
             System.out.printf("Predicate %s%n", w);
             return w.length() > 8;
         }).limit(5).forEach(System.out::println);
+    }
+
+    //Private method for Exercise 2 and 3
+    private static List<String> getWordsFromFile(String filename) throws IOException, URISyntaxException {
+        String contents = new String(Files.readAllBytes(new File(Chapter2.class.getClassLoader().getResource(filename).toURI()).toPath()), StandardCharsets.UTF_8);
+        return Arrays.asList(contents.split("[\\P{L}]+"));
+    }
+
+    //Exercise 3
+    public static void exercise3() throws IOException, URISyntaxException {
+        System.out.println("Exercise 3");
+        List<String> words = getWordsFromFile("war-and-peace.txt");
+        long startSeq = System.currentTimeMillis();
+        long count1 = words.stream().filter(w-> w.length() > 12).count();
+        System.out.println(count1);
+        long stopSeq = System.currentTimeMillis();
+        System.out.printf("Duration (seq) %d%n", stopSeq - startSeq);
+        long startParral = System.currentTimeMillis();
+        long count2 = words.parallelStream().filter(w -> w.length() > 12).count();
+        System.out.println(count2);
+        long stopParral = System.currentTimeMillis();
+        System.out.printf("Duration (parallel) %d%n", stopParral - startParral);
     }
 
     //Exercise 4
@@ -89,6 +110,7 @@ public class Chapter2 {
 
     public static void main(String... args) throws IOException, URISyntaxException {
         exercise2();
+        exercise3();
         exercise4();
         exercise5();
         exercise6();
