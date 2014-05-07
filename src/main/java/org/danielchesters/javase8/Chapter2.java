@@ -5,10 +5,11 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicIntegerArray;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -150,6 +151,34 @@ public class Chapter2 {
         System.out.println("Average : " + average(stream));
     }
 
+    //Exercise 11 : Maybe one day…
+
+    //Exercise 12 (with a sort of array of AtomicInteger)
+    public static void exercise12() throws IOException, URISyntaxException {
+        System.out.println("Exercise 12");
+        List<String> words = getWordsFromFile("war-and-peace.txt");
+        AtomicIntegerArray shortWords = new AtomicIntegerArray(12);
+        words.parallelStream().forEach(w -> {
+            if (w.length() < 12) shortWords.getAndIncrement(w.length());
+        });
+        for (int i = 0;i < shortWords.length();i++) {
+            System.out.println(i + " -> " + shortWords.get(i));
+        }
+    }
+
+    //Exercise 13
+    public static void exercise13() throws IOException, URISyntaxException {
+        System.out.println("Exercise 13");
+        List<String> words = getWordsFromFile("war-and-peace.txt");
+        Map<Integer, Long> shortWordsBySize =
+        words.parallelStream()
+                .filter(w -> w.length() < 12)
+                .collect(Collectors.groupingBy(String::length, Collectors.counting()));
+
+        shortWordsBySize.entrySet().forEach(System.out::println);
+
+    }
+
     public static void main(String... args) throws IOException, URISyntaxException {
         exercise2();
         exercise3();
@@ -158,5 +187,7 @@ public class Chapter2 {
         exercise6();
         exercise8();
         exercise10();
+        exercise12();
+        exercise13();
     }
 }
