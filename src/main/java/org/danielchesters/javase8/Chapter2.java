@@ -6,9 +6,7 @@ import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicIntegerArray;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -161,7 +159,7 @@ public class Chapter2 {
         words.parallelStream().forEach(w -> {
             if (w.length() < 12) shortWords.getAndIncrement(w.length());
         });
-        for (int i = 0;i < shortWords.length();i++) {
+        for (int i = 0; i < shortWords.length(); i++) {
             System.out.println(i + " -> " + shortWords.get(i));
         }
     }
@@ -171,9 +169,9 @@ public class Chapter2 {
         System.out.println("Exercise 13");
         List<String> words = getWordsFromFile("war-and-peace.txt");
         Map<Integer, Long> shortWordsBySize =
-        words.parallelStream()
-                .filter(w -> w.length() < 12)
-                .collect(Collectors.groupingBy(String::length, Collectors.counting()));
+                words.parallelStream()
+                        .filter(w -> w.length() < 12)
+                        .collect(Collectors.groupingBy(String::length, Collectors.counting()));
 
         shortWordsBySize.entrySet().forEach(System.out::println);
 
