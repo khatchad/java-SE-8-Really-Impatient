@@ -31,7 +31,7 @@ public class Chapter2 {
         }).limit(5).forEach(System.out::println);
     }
 
-    //Private method for Exercise 2 and 3
+    //Private method for Exercise 2, 3, 12 and 13
     private static List<String> getWordsFromFile(String filename) throws IOException, URISyntaxException {
         String contents = new String(Files.readAllBytes(new File(Chapter2.class.getClassLoader().getResource(filename).toURI()).toPath()), StandardCharsets.UTF_8);
         return Arrays.asList(contents.split("[\\P{L}]+"));
