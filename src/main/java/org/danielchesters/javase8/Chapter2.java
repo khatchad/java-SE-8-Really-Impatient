@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -40,7 +41,7 @@ public class Chapter2 {
         System.out.println("Exercise 3");
         List<String> words = getWordsFromFile("war-and-peace.txt");
         long startSeq = System.currentTimeMillis();
-        long count1 = words.stream().filter(w-> w.length() > 12).count();
+        long count1 = words.stream().filter(w -> w.length() > 12).count();
         System.out.println(count1);
         long stopSeq = System.currentTimeMillis();
         System.out.printf("Duration (seq) %d%n", stopSeq - startSeq);
@@ -106,6 +107,36 @@ public class Chapter2 {
         Stream<Integer> first = Stream.of(1, 2, 3, 4, 5, 6);
         Stream<Integer> second = Stream.of(1, 2, 3, 4, 5, 6, 7);
         zip(first, second).forEach(System.out::println);
+    }
+
+    //Exercise 9
+    public static <T> ArrayList<T> join1(Stream<ArrayList<T>> stream) {
+        return stream.reduce((l1, l2) -> {
+                    l1.addAll(l2);
+                    return l1;
+                }
+        ).orElse(new ArrayList<T>());
+    }
+
+    public static <T> ArrayList<T> join2(Stream<ArrayList<T>> stream) {
+        return stream.reduce(new ArrayList<T>(), (l1, l2) -> {
+                    l1.addAll(l2);
+                    return l1;
+                }
+        );
+    }
+
+    public static <T> ArrayList<T> join3(Stream<ArrayList<T>> stream) {
+        return stream.reduce(new ArrayList<T>(),
+                (a, l) -> {
+                    a.addAll(l);
+                    return a;
+                },
+                (l1, l2) -> {
+                    l1.addAll(l2);
+                    return l1;
+                }
+        );
     }
 
     public static void main(String... args) throws IOException, URISyntaxException {
