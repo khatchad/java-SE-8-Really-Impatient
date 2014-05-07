@@ -139,6 +139,17 @@ public class Chapter2 {
         );
     }
 
+    //Exercise 10 (It is not a solution with reduce but it is a simple solution)
+    public static double average(Stream<Double> stream) {
+        return stream.mapToDouble(d -> d).average().getAsDouble();
+    }
+
+    public static void exercise10() {
+        System.out.println("Exercise 10");
+        Stream<Double> stream = Stream.of(1.0, 2.0, 3.0);
+        System.out.println("Average : " + average(stream));
+    }
+
     public static void main(String... args) throws IOException, URISyntaxException {
         exercise2();
         exercise3();
@@ -146,5 +157,6 @@ public class Chapter2 {
         exercise5();
         exercise6();
         exercise8();
+        exercise10();
     }
 }
