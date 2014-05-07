@@ -10,6 +10,7 @@ import java.util.stream.Stream;
  */
 public class Chapter2 {
 
+    //Exercise 4
     public static void streamOfInt() {
         int[] values = {1, 4, 9, 16};
         Stream<Object> s = Stream.of(values);
@@ -18,24 +19,22 @@ public class Chapter2 {
         System.out.println(intStream.peek(System.out::println).count());
     }
 
+    //Exercise 5
     public static Stream<Long> randomStream(Long a, Long c, Long m, Long seed) {
         return Stream.iterate(seed, (Long l) -> (a * l + c) % m);
     }
 
+    //Exercise 6
     public static Stream<Character> characterStream(String s) {
         return IntStream.rangeClosed(0, s.length() - 1).mapToObj(s::charAt);
     }
 
-    public static void main(String... args) {
-        Stream<Integer> first = Stream.of(1, 2, 3, 4, 5, 6);
-        Stream<Integer> second = Stream.of(1, 2, 3, 4, 5, 6, 7);
-        zip(first, second).forEach(System.out::println);
-    }
-
+    //Exercise 7 (reflection)
     public static <T> boolean isFinite(Stream<T> stream) {
         return false;
     }
 
+    //Exercise 8 (not my solution)
     public static <T> Stream<T> zip(Stream<T> first, Stream<T> second) {
         Iterator<T> iterSecond = second.iterator();
         return first.flatMap(t -> {
@@ -47,5 +46,15 @@ public class Chapter2 {
                     }
                 }
         );
+    }
+
+    public static void exercise8() {
+        Stream<Integer> first = Stream.of(1, 2, 3, 4, 5, 6);
+        Stream<Integer> second = Stream.of(1, 2, 3, 4, 5, 6, 7);
+        zip(first, second).forEach(System.out::println);
+    }
+
+    public static void main(String... args) {
+        exercise8();
     }
 }

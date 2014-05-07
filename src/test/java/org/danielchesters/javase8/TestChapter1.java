@@ -13,6 +13,7 @@ import java.util.*;
 @RunWith(JUnit4.class)
 public class TestChapter1 {
 
+    //Exercise 1
     @Test
     public void testArraysSort() {
         Integer[] ints = {1, 8, 6, 8, 4, 5};
@@ -22,12 +23,14 @@ public class TestChapter1 {
 
     }
 
+    //Exercise 4
     @Test
     public void testArraysFilesSort() {
         File[] files = Chapter1.sortFilesWithDirectoryFirst(new File("/home/daniel/data/Documents/Developpement/java8/java8SE_really_impatient").listFiles());
         Arrays.asList(files).forEach(System.out::println);
     }
 
+    //Exercise 6 (unless test)
     @Test
     public void testRunnableUnckeck() {
         new Thread(Chapter1.unckeck(() -> {

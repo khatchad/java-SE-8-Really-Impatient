@@ -13,6 +13,7 @@ import java.util.function.Predicate;
  */
 public class Chapter1 {
 
+    //Exercise 2 (or not)
     public List<File> subdirectory(File directory) {
         if (directory == null || !directory.isDirectory()) {
             return Collections.emptyList();
@@ -27,6 +28,7 @@ public class Chapter1 {
         }
     }
 
+    //Exercise 2a
     public File[] subdirectoryWithFilter(File directory) {
         return directory.listFiles(new FileFilter() {
             @Override
@@ -36,14 +38,17 @@ public class Chapter1 {
         });
     }
 
+    //Exercise 2b
     public File[] subdirectoryWithLambda(File directory) {
         return directory.listFiles(f -> f.isDirectory());
     }
 
+    //Exercise 2c
     public File[] subdirectoryWithMethodReference(File directory) {
         return directory.listFiles(File::isDirectory);
     }
 
+    //Exercise 3a
     public String[] filterList(File directory, String extension) {
         return directory.list(new FilenameFilter() {
             @Override
@@ -53,10 +58,12 @@ public class Chapter1 {
         });
     }
 
+    //Exercise 3b
     public String[] filterListWithLambda(File directory, String extension) {
         return directory.list((dir, name) -> name.endsWith(extension));
     }
 
+    //Exercise 4
     public static File[] sortFilesWithDirectoryFirst(File[] files) {
         Arrays.sort(files, (File f1, File f2) -> {
             if ((f1.isDirectory() && f2.isDirectory()) || (f1.isFile() && f2.isFile())) {
@@ -70,11 +77,13 @@ public class Chapter1 {
         return files;
     }
 
+    //Exercise 6 (part 1)
     @FunctionalInterface
     interface RunnableEx {
         public void run() throws Exception;
     }
 
+    //Exercise 6 (part 2)
     public static Runnable unckeck(RunnableEx runner) {
         return () -> {
             try {
@@ -83,6 +92,38 @@ public class Chapter1 {
                 System.err.println(ex);
             }
         };
+    }
+
+    //Exercise 7
+    public static Runnable andThen(Runnable r1, Runnable r2) {
+        return () -> {
+            r1.run();
+            r2.run();
+        };
+    }
+
+    //Exercise 8
+    public static void exercise8() {
+        String[] names = {"Peter", "Paul", "Mary"};
+        List<Runnable> runners = new ArrayList<>();
+        for (String name : names) {
+            runners.add(() -> System.out.println(name));
+        }
+
+        for (Runnable runner : runners) {
+            new Thread(runner).start();
+        }
+    }
+
+    //Exercise 9
+    public interface Collection2<E> extends Collection<E> {
+        default void forEachIf(Consumer<E> action, Predicate<E> filter) {
+            forEach(
+                    e -> {
+                        if (filter.test(e)) action.accept(e);
+                    }
+            );
+        }
     }
 
     public static void main(String... args) {
@@ -96,36 +137,6 @@ public class Chapter1 {
 //                () -> System.out.println("2")
 //        )).start();
 
-//        exercice8();
-    }
-
-    public static Runnable andThen(Runnable r1, Runnable r2) {
-        return () -> {
-            r1.run();
-            r2.run();
-        };
-    }
-
-    public static void exercice8() {
-        String[] names = {"Peter", "Paul", "Mary"};
-        List<Runnable> runners = new ArrayList<>();
-        for (String name : names) {
-            runners.add(() -> System.out.println(name));
-        }
-
-        for (Runnable runner : runners) {
-            new Thread(runner).start();
-        }
-    }
-
-
-    public interface Collection2<E> extends Collection<E> {
-        default void forEachIf(Consumer<E> action, Predicate<E> filter) {
-            forEach(
-                    e -> {
-                        if (filter.test(e)) action.accept(e);
-                    }
-            );
-        }
+//        exercise8();
     }
 }
