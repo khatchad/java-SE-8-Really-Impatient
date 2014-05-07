@@ -1,7 +1,13 @@
 package org.danielchesters.javase8;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -9,6 +15,20 @@ import java.util.stream.Stream;
  * Created by daniel on 06/05/14.
  */
 public class Chapter2 {
+
+    //Exercise 1 : Too complex for demonstrate stream pro
+
+    //Exercise 2
+    public static void exercise2() throws URISyntaxException, IOException {
+        System.out.println("Exercise 2");
+        String contents = new String(Files.readAllBytes(new File(Chapter2.class.getClassLoader().getResource("alice.txt").toURI()).toPath()), StandardCharsets.UTF_8);
+        List<String> words = Arrays.asList(contents.split("[\\P{L}]+"));
+
+        words.stream().filter(w -> {
+            System.out.printf("Predicate %s%n", w);
+            return w.length() > 8;
+        }).limit(5).forEach(System.out::println);
+    }
 
     //Exercise 4
     public static void exercise4() {
@@ -36,7 +56,7 @@ public class Chapter2 {
         return IntStream.rangeClosed(0, s.length() - 1).mapToObj(s::charAt);
     }
 
-    public static void exercise6(){
+    public static void exercise6() {
         System.out.println("Exercise 6");
         characterStream("toto").forEach(System.out::println);
     }
@@ -46,7 +66,7 @@ public class Chapter2 {
         return false;
     }
 
-    //Exercise 8 (not my solution)
+    //Exercise 8 (not my solution, I had no idea how start)
     public static <T> Stream<T> zip(Stream<T> first, Stream<T> second) {
         Iterator<T> iterSecond = second.iterator();
         return first.flatMap(t -> {
@@ -67,7 +87,8 @@ public class Chapter2 {
         zip(first, second).forEach(System.out::println);
     }
 
-    public static void main(String... args) {
+    public static void main(String... args) throws IOException, URISyntaxException {
+        exercise2();
         exercise4();
         exercise5();
         exercise6();
