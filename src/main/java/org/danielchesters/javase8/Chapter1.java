@@ -13,6 +13,7 @@ import java.util.function.Predicate;
 public class Chapter1 {
     //Exercise 1 (reflection)
     public static void exercise1() {
+        System.out.println("Exercise 1");
         Integer[] ints = {1, 8, 6, 8, 4, 5};
 
         Arrays.sort(ints, Comparator.<Integer>naturalOrder());
@@ -71,6 +72,8 @@ public class Chapter1 {
         Arrays.asList(files).forEach(System.out::println);
     }
 
+    //Exercise 5 : I don't have enough code with Runnable or some things equivalent
+
     //Exercise 6
     @FunctionalInterface
     interface RunnableEx {
@@ -127,7 +130,7 @@ public class Chapter1 {
         }
     }
 
-    //Exercise 9
+    //Exercise 9 (not usable in this condition)
     public interface Collection2<E> extends Collection<E> {
         default void forEachIf(Consumer<E> action, Predicate<E> filter) {
             forEach(
@@ -137,6 +140,12 @@ public class Chapter1 {
             );
         }
     }
+
+    //Exercise 10 : not code
+
+    //Exercise 11 : Maybe one day…
+
+    //Exercise 12 : not code
 
     public static void main(String... args) {
         exercise1();
