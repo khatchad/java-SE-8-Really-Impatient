@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FilenameFilter;
 import java.util.*;
-import java.util.concurrent.Callable;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -12,23 +11,15 @@ import java.util.function.Predicate;
  * Created by daniel on 06/05/14.
  */
 public class Chapter1 {
+    //Exercise 1 (reflection)
+    public static void exercise1() {
+        Integer[] ints = {1, 8, 6, 8, 4, 5};
 
-    //Exercise 2 (or not)
-    public List<File> subdirectory(File directory) {
-        if (directory == null || !directory.isDirectory()) {
-            return Collections.emptyList();
-        } else {
-            List<File> subdirectory = new ArrayList<>();
-            for (File f : directory.listFiles()) {
-                if (f.isDirectory()) {
-                    subdirectory.add(f);
-                }
-            }
-            return subdirectory;
-        }
+        Arrays.sort(ints, Comparator.<Integer>naturalOrder());
+        Arrays.asList(ints).forEach(System.out::println);
     }
 
-    //Exercise 2a
+    //Exercise 2
     public File[] subdirectoryWithFilter(File directory) {
         return directory.listFiles(new FileFilter() {
             @Override
@@ -38,17 +29,15 @@ public class Chapter1 {
         });
     }
 
-    //Exercise 2b
     public File[] subdirectoryWithLambda(File directory) {
         return directory.listFiles(f -> f.isDirectory());
     }
 
-    //Exercise 2c
     public File[] subdirectoryWithMethodReference(File directory) {
         return directory.listFiles(File::isDirectory);
     }
 
-    //Exercise 3a
+    //Exercise 3
     public String[] filterList(File directory, String extension) {
         return directory.list(new FilenameFilter() {
             @Override
@@ -58,7 +47,6 @@ public class Chapter1 {
         });
     }
 
-    //Exercise 3b
     public String[] filterListWithLambda(File directory, String extension) {
         return directory.list((dir, name) -> name.endsWith(extension));
     }
@@ -77,13 +65,18 @@ public class Chapter1 {
         return files;
     }
 
-    //Exercise 6 (part 1)
+    public static void exercise4() {
+        System.out.println("Exercise 4");
+        File[] files = Chapter1.sortFilesWithDirectoryFirst(new File("/home/daniel/data/Documents/Developpement/java8/java8SE_really_impatient").listFiles());
+        Arrays.asList(files).forEach(System.out::println);
+    }
+
+    //Exercise 6
     @FunctionalInterface
     interface RunnableEx {
         public void run() throws Exception;
     }
 
-    //Exercise 6 (part 2)
     public static Runnable unckeck(RunnableEx runner) {
         return () -> {
             try {
@@ -94,6 +87,16 @@ public class Chapter1 {
         };
     }
 
+    public static void exercise6() {
+        System.out.println("Exercise 6");
+        new Thread(Chapter1.unckeck(() -> {
+            System.out.println("Zzzz!!");
+            Thread.sleep(1000);
+            System.out.println("!!!!");
+        })).start();
+
+    }
+
     //Exercise 7
     public static Runnable andThen(Runnable r1, Runnable r2) {
         return () -> {
@@ -102,8 +105,17 @@ public class Chapter1 {
         };
     }
 
+    public static void exercise7() {
+        System.out.println("Exercise 7");
+        new Thread(andThen(
+                () -> System.out.println("1"),
+                () -> System.out.println("2")
+        )).start();
+    }
+
     //Exercise 8
     public static void exercise8() {
+        System.out.println("Exercise 8");
         String[] names = {"Peter", "Paul", "Mary"};
         List<Runnable> runners = new ArrayList<>();
         for (String name : names) {
@@ -127,16 +139,16 @@ public class Chapter1 {
     }
 
     public static void main(String... args) {
-//        new Thread(Chapter1.unckeck(() -> {
-//            System.out.println("Zzzz!!");
-//            Thread.sleep(1000);
-//            System.out.println("!!!!");
-//        })).start();
-//        new Thread(andThen(
-//                () -> System.out.println("1"),
-//                () -> System.out.println("2")
-//        )).start();
-
-//        exercise8();
+        exercise1();
+        exercise4();
+        exercise6();
+        exercise7();
+        exercise8();
     }
+
+
+
+
+
+
 }
