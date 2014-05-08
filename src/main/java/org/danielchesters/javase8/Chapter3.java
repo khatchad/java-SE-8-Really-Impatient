@@ -48,6 +48,7 @@ public class Chapter3 {
     }
 
     public static void exercise3() {
+        System.out.println("Exercise 3");
         assertMethod(() -> Math.random() < 0.5);
     }
 
