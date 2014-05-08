@@ -40,8 +40,20 @@ public class Chapter3 {
         withLock(lock, () -> System.out.println("Lock2"));
     }
 
+    //Exercise 3
+    public static void assertMethod(Supplier<Boolean> condition) {
+        if (!condition.get()) {
+            throw new AssertionError();
+        }
+    }
+
+    public static void exercise3() {
+        assertMethod(() -> Math.random() < 0.5);
+    }
+
     public static void main(String... args) {
         exercise1();
         exercise2();
+        exercise3();
     }
 }
