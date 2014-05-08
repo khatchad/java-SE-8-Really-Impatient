@@ -12,10 +12,8 @@ public class Chapter3 {
     //Exercise 1
     public static void logIf(Level level, Supplier<Boolean> condition, Supplier<String> message) {
         Logger logger = Logger.getGlobal();
-        if (logger.isLoggable(level)) {
-            if (condition.get()) {
-                logger.log(level, message.get());
-            }
+        if (logger.isLoggable(level) && condition.get()) {
+            logger.log(level, message.get());
         }
     }
 
