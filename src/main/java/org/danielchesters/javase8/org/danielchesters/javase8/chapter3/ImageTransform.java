@@ -77,10 +77,10 @@ public class ImageTransform extends Application {
                         || y < 10 || y > image.getHeight() - 10 ? Color.GRAY : c
         );
 
-        Image image2bis = transform(image, frameBorder(image, 10, Color.GRAY));
+        Image image2bis = transform(image, frameBorder(image, 15, Color.BLUE));
 
         Image image3 = transform(image, (Color c, Double d) -> c.deriveColor(0, 1, d, 1), 1.2);
-        stage.setScene(new Scene(new HBox(new ImageView(image), new ImageView(brightenedImage), new ImageView(image2), new ImageView(image3))));
+        stage.setScene(new Scene(new HBox(new ImageView(image), new ImageView(brightenedImage), new ImageView(image2), new ImageView(image2bis))));
         stage.show();
     }
 }
