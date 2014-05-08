@@ -1,5 +1,6 @@
 package org.danielchesters.javase8;
 
+import java.util.Comparator;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Supplier;
 import java.util.logging.Level;
@@ -53,6 +54,18 @@ public class Chapter3 {
     }
 
     //Exercise 4 : not code
+
+    //Exercise 7 : I am not sure that it is the solution
+    public static Comparator<String> stringComparator(Comparator<String> comparator1, Comparator<String> comparator2) {
+        return (s1, s2) -> {
+            int resultComparator1 = comparator1.compare(s1, s2);
+            if (resultComparator1 == 0) {
+                return comparator2.compare(s1, s2);
+            } else {
+                return resultComparator1;
+            }
+        };
+    }
 
     public static void main(String... args) {
         exercise1();
