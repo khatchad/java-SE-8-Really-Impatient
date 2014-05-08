@@ -1,4 +1,4 @@
-package org.danielchesters.javase8.org.danielchesters.javase8.chapter3;
+package org.danielchesters.javase8.chapter3;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
