@@ -134,7 +134,7 @@ public class ImageTransform extends Application {
 
         Image imageExercise11 = transform(image, compose(frameBorder(image, 10, Color.GRAY), convert(Color::brighter)));
 
-        stage.setScene(new Scene(new HBox(new ImageView(image), new ImageView(brightenedImage), new ImageView(image2), new ImageView(imageExercise10))));
+        stage.setScene(new Scene(new HBox(new ImageView(image), new ImageView(brightenedImage), new ImageView(image2), new ImageView(imageExercise11))));
         stage.show();
     }
 }
