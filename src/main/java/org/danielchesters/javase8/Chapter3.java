@@ -4,7 +4,6 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Supplier;
 import java.util.logging.Level;
@@ -82,7 +81,7 @@ public class Chapter3 {
                     String field1 = (String) field.get(o1);
                     String field2 = (String) field.get(o2);
                     result = field1.compareTo(field2);
-                    if (result != 0){
+                    if (result != 0) {
                         break;
                     }
                 }
@@ -93,22 +92,10 @@ public class Chapter3 {
         };
     }
 
-    static class Test {
-        String lastName;
-        String firstName;
-        public Test(String lastName, String firstName) {
-            this.lastName = lastName;
-            this.firstName = firstName;
-        }
-        public String toString() {
-            return firstName + " " + lastName;
-        }
-    }
-
     public static void exercise9() {
         System.out.println("Exercise 9");
 
-        List<Test> tests = Arrays.asList(new Test("Test","Test"), new Test("Chesters", "Daniel"));
+        List<Test> tests = Arrays.asList(new Test("Test", "Test"), new Test("Chesters", "Daniel"));
         tests.sort(lexicographicComparator("lastName", "firstName"));
         tests.forEach(System.out::println);
     }
@@ -118,5 +105,19 @@ public class Chapter3 {
         exercise2();
         //I am not run always exercise 3 method, because it is throw an error 50% of time
         exercise9();
+    }
+
+    static class Test {
+        String lastName;
+        String firstName;
+
+        public Test(String lastName, String firstName) {
+            this.lastName = lastName;
+            this.firstName = firstName;
+        }
+
+        public String toString() {
+            return firstName + " " + lastName;
+        }
     }
 }
