@@ -49,7 +49,7 @@ public class ImageTransform extends Application {
         return out;
     }
 
-    //Exercise6
+    //Exercise 6
     public static <T> Image transform(Image in, BiFunction<Color, T, Color> f, T arg) {
         int width = (int) in.getWidth();
         int height = (int) in.getHeight();
@@ -62,6 +62,12 @@ public class ImageTransform extends Application {
         return out;
     }
 
+    //Exercise 8
+    public static ColorTransformer frameBorder(Image image, int thickness, Color color) {
+        return (x, y, c) -> x < thickness || x > image.getWidth() - thickness
+                || y < thickness || y > image.getHeight() - thickness ? color : c;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
         Image image = new Image(this.getClass().getClassLoader().getResourceAsStream("queen-mary.png"));
@@ -70,6 +76,8 @@ public class ImageTransform extends Application {
                 (x, y, c) -> x < 10 || x > image.getWidth() - 10
                         || y < 10 || y > image.getHeight() - 10 ? Color.GRAY : c
         );
+
+        Image image2bis = transform(image, frameBorder(image, 10, Color.GRAY));
 
         Image image3 = transform(image, (Color c, Double d) -> c.deriveColor(0, 1, d, 1), 1.2);
         stage.setScene(new Scene(new HBox(new ImageView(image), new ImageView(brightenedImage), new ImageView(image2), new ImageView(image3))));
