@@ -18,7 +18,7 @@ public class Chapter3 {
     }
 
     public static void exercise1() {
-        System.out.println("Exercice 1");
+        System.out.println("Exercise 1");
         logIf(Level.INFO, () -> true, () -> "Test");
     }
 
