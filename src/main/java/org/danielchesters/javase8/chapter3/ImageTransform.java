@@ -132,7 +132,7 @@ public class ImageTransform extends Application {
 
         Image image3 = transform(image, (Color c, Double d) -> c.deriveColor(0, 1, d, 1), 1.2);
 
-        Image imageExercise10 = transform(image, compose(frameBorder(image, 10, Color.GRAY), convert(Color::brighter)));
+        Image imageExercise11 = transform(image, compose(frameBorder(image, 10, Color.GRAY), convert(Color::brighter)));
 
         stage.setScene(new Scene(new HBox(new ImageView(image), new ImageView(brightenedImage), new ImageView(image2), new ImageView(imageExercise10))));
         stage.show();
