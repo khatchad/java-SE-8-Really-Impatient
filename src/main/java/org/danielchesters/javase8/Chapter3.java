@@ -1,5 +1,6 @@
 package org.danielchesters.javase8;
 
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,7 +23,25 @@ public class Chapter3 {
         logIf(Level.INFO, () -> true, () -> "Test");
     }
 
+    //Exercise 2
+    public static void withLock(ReentrantLock lock, Runnable runnable) {
+        lock.lock();
+        try {
+            runnable.run();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public static void exercise2() {
+        System.out.println("Exercise 2");
+        ReentrantLock lock = new ReentrantLock();
+        withLock(lock, () -> System.out.println("Lock"));
+        withLock(lock, () -> System.out.println("Lock2"));
+    }
+
     public static void main(String... args) {
         exercise1();
+        exercise2();
     }
 }
