@@ -68,6 +68,17 @@ public class ImageTransform extends Application {
                 || y < thickness || y > image.getHeight() - thickness ? color : c;
     }
 
+    //Exercise 10 : not really code
+
+    //Exercise 11
+    public static ColorTransformer compose(ColorTransformer transformerAfter, ColorTransformer transformerBefore) {
+        return (x, y, c) -> transformerAfter.apply(x, y, transformerBefore.apply(x, y, c));
+    }
+
+    public static ColorTransformer convert(UnaryOperator<Color> f) {
+        return (x, y, c) -> f.apply(c);
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
         Image image = new Image(this.getClass().getClassLoader().getResourceAsStream("queen-mary.png"));
@@ -80,7 +91,10 @@ public class ImageTransform extends Application {
         Image image2bis = transform(image, frameBorder(image, 15, Color.BLUE));
 
         Image image3 = transform(image, (Color c, Double d) -> c.deriveColor(0, 1, d, 1), 1.2);
-        stage.setScene(new Scene(new HBox(new ImageView(image), new ImageView(brightenedImage), new ImageView(image2), new ImageView(image2bis))));
+
+        Image imageExercise10 = transform(image, compose(frameBorder(image, 10, Color.GRAY), convert(Color::brighter)));
+
+        stage.setScene(new Scene(new HBox(new ImageView(image), new ImageView(brightenedImage), new ImageView(image2), new ImageView(imageExercise10))));
         stage.show();
     }
 }
