@@ -51,6 +51,8 @@ public class Chapter3 {
         assertMethod(() -> Math.random() < 0.5);
     }
 
+    //Exercise 4 : not code
+
     public static void main(String... args) {
         exercise1();
         exercise2();
