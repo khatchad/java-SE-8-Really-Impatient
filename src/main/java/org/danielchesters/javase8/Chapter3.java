@@ -4,8 +4,12 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -126,6 +130,24 @@ public class Chapter3 {
                     second.accept(result, null);
                 } catch (Throwable t) {
                     second.accept(null, t);
+                }
+            }
+        };
+        t.start();
+    }
+
+    //Exercise 17
+    public static void doInParallelAsync(Runnable first, Runnable second, Consumer<Throwable> handler) {
+        Thread t = new Thread() {
+            public void run() {
+                try {
+                    ExecutorService pool = Executors.newCachedThreadPool();
+                    pool.submit(first);
+                    pool.submit(second);
+                    pool.shutdown();
+                    pool.awaitTermination(1, TimeUnit.HOURS);
+                } catch (Throwable t) {
+                    handler.accept(t);
                 }
             }
         };
