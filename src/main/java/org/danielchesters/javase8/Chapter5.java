@@ -3,6 +3,7 @@ package org.danielchesters.javase8;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.WeekFields;
@@ -82,10 +83,22 @@ public class Chapter5 {
         cal(5, 2014);
     }
 
+    //Exercise 5
+    public static void daysBeenAlive(LocalDate birthday) {
+        long period = birthday.until(LocalDate.now(), ChronoUnit.DAYS);
+        System.out.printf("%d days since you are born%n", period);
+    }
+
+    public static void exercise5() {
+        System.out.println("Exercise 5");
+        daysBeenAlive(LocalDate.of(1985, 4, 28));
+    }
+
     public static void main(String... args) {
         exercise1();
         exercise2();
         exercise3();
         exercise4();
+        exercise5();
     }
 }
