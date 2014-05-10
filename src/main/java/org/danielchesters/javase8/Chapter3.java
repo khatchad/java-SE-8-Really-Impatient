@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -92,21 +93,6 @@ public class Chapter3 {
         };
     }
 
-    public static void exercise9() {
-        System.out.println("Exercise 9");
-
-        List<Test> tests = Arrays.asList(new Test("Test", "Test"), new Test("Chesters", "Daniel"));
-        tests.sort(lexicographicComparator("lastName", "firstName"));
-        tests.forEach(System.out::println);
-    }
-
-    public static void main(String... args) {
-        exercise1();
-        exercise2();
-        //I am not run always exercise 3 method, because it is throw an error 50% of time
-        exercise9();
-    }
-
     static class Test {
         String lastName;
         String firstName;
@@ -119,5 +105,37 @@ public class Chapter3 {
         public String toString() {
             return firstName + " " + lastName;
         }
+    }
+
+    public static void exercise9() {
+        System.out.println("Exercise 9");
+
+        List<Test> tests = Arrays.asList(new Test("Test", "Test"), new Test("Chesters", "Daniel"));
+        tests.sort(lexicographicComparator("lastName", "firstName"));
+        tests.forEach(System.out::println);
+    }
+
+    //Exercise 13 & 14 : maybe one day...
+
+    //Exercise 16
+    public static <T> void doInOrderAsync(Supplier<T> first, BiConsumer<T, Throwable> second) {
+        Thread t = new Thread() {
+            public void run() {
+                try {
+                    T result = first.get();
+                    second.accept(result, null);
+                } catch (Throwable t) {
+                    second.accept(null, t);
+                }
+            }
+        };
+        t.start();
+    }
+
+    public static void main(String... args) {
+        exercise1();
+        exercise2();
+        //I am not run always exercise 3 method, because it is throw an error 50% of time
+        exercise9();
     }
 }
