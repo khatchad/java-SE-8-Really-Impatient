@@ -209,6 +209,24 @@ public class Chapter3 {
         };
     }
 
+    //Exercise 22 : not code
+
+    //Exercise 23
+    public static class Pair<T> {
+        public T obj1;
+        public T obj2;
+
+        public Pair(T obj1, T obj2) {
+            this.obj1 = obj1;
+            this.obj2 = obj2;
+        }
+    }
+
+    public static <T, U> Pair<U> map(Pair<T> pair, Function<T, U> function) {
+        return new Pair<U>(function.apply(pair.obj1), function.apply(pair.obj2));
+    }
+
+
     public static void main(String... args) {
         exercise1();
         exercise2();
