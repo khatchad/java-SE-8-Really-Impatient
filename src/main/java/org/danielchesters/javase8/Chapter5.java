@@ -162,6 +162,15 @@ public class Chapter5 {
         System.out.println(arrival);
     }
 
+    //Exercise 11
+    public static void exercise11() {
+        System.out.println("Exercise 10");
+        ZonedDateTime departure = ZonedDateTime.of(2014, 5, 10, 14, 5, 0, 0, ZoneId.of("Europe/Berlin"));
+        ZonedDateTime arrival = ZonedDateTime.of(2014, 5, 10, 16, 40, 0, 0, ZoneId.of("America/Los_Angeles"));
+        Duration duration = Duration.between(departure.toInstant(), arrival.toInstant());
+        System.out.println(duration);
+    }
+
     public static void main(String... args) {
         exercise1();
         exercise2();
@@ -173,5 +182,6 @@ public class Chapter5 {
         exercise8();
         exercise9();
         exercise10();
+        exercise11();
     }
 }
