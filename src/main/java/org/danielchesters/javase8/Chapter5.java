@@ -1,5 +1,6 @@
 package org.danielchesters.javase8;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Period;
@@ -7,6 +8,9 @@ import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.WeekFields;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
 
 /**
@@ -42,7 +46,7 @@ public class Chapter5 {
             LocalDate date = w;
             do {
                 date = date.plusDays(1);
-            } while (predicate.test(date));
+            } while (!predicate.test(date));
             return date;
         });
     }
@@ -94,11 +98,26 @@ public class Chapter5 {
         daysBeenAlive(LocalDate.of(1985, 4, 28));
     }
 
+    //Exercise 6
+    public static void exercise6() {
+        System.out.println("Exercise 6");
+        LocalDate startDate = LocalDate.of(1900, 1, 1);
+        LocalDate stopDate = LocalDate.of(2000, 1, 1);
+        LocalDate date = startDate;
+        List<LocalDate> listOfFridayThe13th = new ArrayList<>();
+        while (date.isBefore(stopDate)) {
+            date = date.with(next(d -> d.getDayOfWeek().equals(DayOfWeek.FRIDAY) && d.getDayOfMonth() == 13));
+            listOfFridayThe13th.add(date);
+        }
+        listOfFridayThe13th.forEach(System.out::println);
+    }
+
     public static void main(String... args) {
         exercise1();
         exercise2();
         exercise3();
         exercise4();
         exercise5();
+        exercise6();
     }
 }
