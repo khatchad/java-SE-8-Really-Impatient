@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.Period;
 import java.time.temporal.TemporalAdjuster;
+import java.util.function.Predicate;
 
 /**
  * Created by daniel on 10/05/14.
@@ -33,8 +34,25 @@ public class Chapter5 {
         System.out.println(date.plusYears(1).plusYears(1).plusYears(1).plusYears(1));
     }
 
+    //Exercise 3
+    public static TemporalAdjuster next(Predicate<LocalDate> predicate) {
+        return w -> {
+            LocalDate date = (LocalDate) w;
+            do {
+                date = date.plusDays(1);
+            } while (predicate.test(date));
+            return date;
+        };
+    }
+
+    public static void exercise3() {
+        System.out.println("Exercise 3");
+        System.out.println(LocalDate.now().with(next(d -> d.getDayOfWeek().getValue() < 6)));
+    }
+
     public static void main(String... args) {
         exercise1();
         exercise2();
+        exercise3();
     }
 }
