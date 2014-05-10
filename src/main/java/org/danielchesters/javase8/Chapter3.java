@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -152,6 +153,24 @@ public class Chapter3 {
             }
         };
         t.start();
+    }
+
+    //Exercise 18
+    @FunctionalInterface
+    public interface BiCallable<T, U> {
+        U call(T t) throws Exception;
+    }
+
+    public static <T, U> Function<T, U> unchecked(BiCallable<T, U> f) {
+        return (T arg) -> {
+            try {
+                return f.call(arg);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            } catch (Throwable t) {
+                throw t;
+            }
+        };
     }
 
     public static void main(String... args) {
