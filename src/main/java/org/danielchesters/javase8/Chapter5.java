@@ -1,9 +1,6 @@
 package org.danielchesters.javase8;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.Month;
-import java.time.Period;
+import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
@@ -12,6 +9,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * Created by daniel on 10/05/14.
@@ -112,6 +110,43 @@ public class Chapter5 {
         listOfFridayThe13th.forEach(System.out::println);
     }
 
+    //Exercise 7
+    public static class TimeInterval {
+        public LocalTime startTime;
+        public LocalTime endTime;
+
+        public TimeInterval(LocalTime startTime, LocalTime endTime) {
+            this.startTime = startTime;
+            this.endTime = endTime;
+        }
+    }
+
+    public static boolean intervalOverlap(TimeInterval firstInterval, TimeInterval secondInterval) {
+        if (firstInterval.startTime.isBefore(secondInterval.startTime)) {
+            return secondInterval.startTime.isBefore(firstInterval.endTime);
+        } else {
+            return firstInterval.startTime.isBefore(secondInterval.endTime);
+        }
+    }
+
+    public static void exercise7() {
+        System.out.println("Exercise 7");
+        LocalTime startTime1 = LocalTime.of(10,00);
+        LocalTime stopTime1 = LocalTime.of(11,00);
+        LocalTime startTime2 = LocalTime.of(10,30);
+        LocalTime stopTime2 = LocalTime.of(11,30);
+        TimeInterval timeInterval1 = new TimeInterval(startTime1, stopTime1);
+        TimeInterval timeInterval2 = new TimeInterval(startTime2, stopTime2);
+        System.out.println(intervalOverlap(timeInterval1, timeInterval2));
+    }
+
+    //Exercise 8
+    public static void exercise8() {
+        System.out.println("Exercise 8");
+        Instant now = Instant.now();
+        ZoneId.getAvailableZoneIds().stream().map(zone -> ZoneId.of(zone).getRules().getOffset(now)).collect(Collectors.toSet()).forEach(System.out::println);
+    }
+
     public static void main(String... args) {
         exercise1();
         exercise2();
@@ -119,5 +154,7 @@ public class Chapter5 {
         exercise4();
         exercise5();
         exercise6();
+        exercise7();
+        exercise8();
     }
 }
