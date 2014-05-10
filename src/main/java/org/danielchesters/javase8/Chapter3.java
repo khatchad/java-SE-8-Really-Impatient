@@ -4,9 +4,7 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -179,6 +177,36 @@ public class Chapter3 {
     //Exercise 20
     public static <T, U> List<U> map(List<T> list, Function<T, U> function) {
         return list.stream().map(function).collect(Collectors.toList());
+    }
+
+    //Exercise 21 : Maybe this solution is too simple
+    public static <T, U> Future<U> map(Future<T> future, Function<T, U> function) {
+        return new Future<U>() {
+            @Override
+            public boolean cancel(boolean mayInterruptIfRunning) {
+                return false;
+            }
+
+            @Override
+            public boolean isCancelled() {
+                return false;
+            }
+
+            @Override
+            public boolean isDone() {
+                return true;
+            }
+
+            @Override
+            public U get() throws InterruptedException, ExecutionException {
+                return function.apply(future.get());
+            }
+
+            @Override
+            public U get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
+                return function.apply(future.get());
+            }
+        };
     }
 
     public static void main(String... args) {
