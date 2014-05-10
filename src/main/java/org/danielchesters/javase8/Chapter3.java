@@ -14,6 +14,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  * Created by daniel on 08/05/14.
@@ -171,6 +172,13 @@ public class Chapter3 {
                 throw t;
             }
         };
+    }
+
+    //Exercise 19 : not code
+
+    //Exercise 20
+    public static <T, U> List<U> map(List<T> list, Function<T, U> function) {
+        return list.stream().map(function).collect(Collectors.toList());
     }
 
     public static void main(String... args) {
