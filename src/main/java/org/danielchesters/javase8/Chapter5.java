@@ -154,6 +154,14 @@ public class Chapter5 {
                 .collect(Collectors.toSet()).forEach(System.out::println);
     }
 
+    //Exercise 10
+    public static void exercise10() {
+        System.out.println("Exercise 10");
+        ZonedDateTime departure = ZonedDateTime.of(2014, 5, 10, 15, 5, 0, 0, ZoneId.of("America/Los_Angeles"));
+        ZonedDateTime arrival = departure.plusMinutes(650).toInstant().atZone(ZoneId.of("Europe/Berlin"));
+        System.out.println(arrival);
+    }
+
     public static void main(String... args) {
         exercise1();
         exercise2();
@@ -164,5 +172,6 @@ public class Chapter5 {
         exercise7();
         exercise8();
         exercise9();
+        exercise10();
     }
 }
