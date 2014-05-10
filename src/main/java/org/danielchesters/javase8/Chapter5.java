@@ -5,7 +5,6 @@ import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.WeekFields;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -131,10 +130,10 @@ public class Chapter5 {
 
     public static void exercise7() {
         System.out.println("Exercise 7");
-        LocalTime startTime1 = LocalTime.of(10,00);
-        LocalTime stopTime1 = LocalTime.of(11,00);
-        LocalTime startTime2 = LocalTime.of(10,30);
-        LocalTime stopTime2 = LocalTime.of(11,30);
+        LocalTime startTime1 = LocalTime.of(10, 00);
+        LocalTime stopTime1 = LocalTime.of(11, 00);
+        LocalTime startTime2 = LocalTime.of(10, 30);
+        LocalTime stopTime2 = LocalTime.of(11, 30);
         TimeInterval timeInterval1 = new TimeInterval(startTime1, stopTime1);
         TimeInterval timeInterval2 = new TimeInterval(startTime2, stopTime2);
         System.out.println(intervalOverlap(timeInterval1, timeInterval2));
@@ -147,6 +146,14 @@ public class Chapter5 {
         ZoneId.getAvailableZoneIds().stream().map(zone -> ZoneId.of(zone).getRules().getOffset(now)).collect(Collectors.toSet()).forEach(System.out::println);
     }
 
+    //Exercise 9
+    public static void exercise9() {
+        System.out.println("Exercise 9");
+        Instant now = Instant.now();
+        ZoneId.getAvailableZoneIds().stream().map(zone -> ZoneId.of(zone).getRules().getOffset(now)).filter(offset -> offset.getTotalSeconds() % 3600 != 0)
+                .collect(Collectors.toSet()).forEach(System.out::println);
+    }
+
     public static void main(String... args) {
         exercise1();
         exercise2();
@@ -156,5 +163,6 @@ public class Chapter5 {
         exercise6();
         exercise7();
         exercise8();
+        exercise9();
     }
 }
