@@ -226,6 +226,10 @@ public class Chapter3 {
         return new Pair<U>(function.apply(pair.obj1), function.apply(pair.obj2));
     }
 
+    //Exercise 24 : It is too simple for flatMap
+    public static <T, U> U flatMap(Pair<T> pair, Function<Pair<T>, U> function) {
+        return function.apply(pair);
+    }
 
     public static void main(String... args) {
         exercise1();
