@@ -25,7 +25,16 @@ public class Chapter5 {
         return LocalDate.of(year, Month.JANUARY, 1).plus(durationOf255Days);
     }
 
+    //Exercise 2
+    public static void exercise2() {
+        System.out.println("Exercise 2");
+        LocalDate date = LocalDate.of(2000, 2, 29);
+        System.out.println(date.plusYears(4));
+        System.out.println(date.plusYears(1).plusYears(1).plusYears(1).plusYears(1));
+    }
+
     public static void main(String... args) {
         exercise1();
+        exercise2();
     }
 }
