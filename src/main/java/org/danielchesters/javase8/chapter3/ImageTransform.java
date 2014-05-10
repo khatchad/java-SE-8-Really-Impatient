@@ -11,6 +11,9 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.function.BiFunction;
 import java.util.function.UnaryOperator;
 
@@ -56,6 +59,36 @@ class LatentImage {
                 }
                 out.getPixelWriter().setColor(x, y, c);
             }
+        return out;
+    }
+
+    //Exercise 15
+    public Image toImageParallel() {
+        int n = Runtime.getRuntime().availableProcessors();
+        int width = (int) in.getWidth();
+        int height = (int) in.getHeight();
+        WritableImage out = new WritableImage(width, height);
+        try {
+            ExecutorService pool = Executors.newCachedThreadPool();
+            for (int i = 0; i < n; i++) {
+                int fromY = i * height / n;
+                int toY = (i + 1) * height / n;
+                pool.submit( () -> {
+                    for (int x = 0; x < width; x++)
+                        for (int y = fromY; y < toY; y++) {
+                            Color c = in.getPixelReader().getColor(x, y);
+                            for (ColorTransformer f : pendingOperations) {
+                                c = f.apply(x, y, c);
+                            }
+                            out.getPixelWriter().setColor(x, y, c);
+                        }
+                });
+                pool.shutdown();
+                pool.awaitTermination(1, TimeUnit.HOURS);
+            }
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
         return out;
     }
 }
