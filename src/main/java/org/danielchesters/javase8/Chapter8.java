@@ -196,6 +196,11 @@ public class Chapter8 {
         return connection.getInputStream();
     }
 
+    //Exercise 14
+    public static void exercise14(String string) {
+        Objects.requireNonNull(string, () -> "string must not be null");
+    }
+
     public static void main(String... args) throws IOException, URISyntaxException {
         exercise2();
         exercise3();
