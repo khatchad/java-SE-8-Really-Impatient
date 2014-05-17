@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.DoubleStream;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
  * Created by daniel on 17/05/14.
@@ -76,6 +78,110 @@ public class Chapter8 {
         System.out.printf("Count of long words : %d%n", words.size());
         duration = System.currentTimeMillis() - start;
         System.out.printf("Duration : %d%n", duration);
+    }
+
+    //Exercise 9
+    public static Stream<String> scannerToLines(Scanner scanner) {
+        Iterator<String> iter = new Iterator<String>() {
+            String nextLine = null;
+
+            @Override
+            public boolean hasNext() {
+                if (nextLine != null) {
+                    return true;
+                } else {
+                    nextLine = scanner.nextLine();
+                    return (nextLine != null);
+                }
+            }
+
+            @Override
+            public String next() {
+                if (nextLine != null || hasNext()) {
+                    String line = nextLine;
+                    nextLine = null;
+                    return line;
+                } else {
+                    throw new NoSuchElementException();
+                }
+            }
+        };
+        return StreamSupport.stream(Spliterators.spliteratorUnknownSize(
+                iter, Spliterator.ORDERED | Spliterator.NONNULL), false);
+    }
+
+    public static Stream<String> scannerToWords(Scanner scanner) {
+        Iterator<String> iter = new Iterator<String>() {
+            String nextWord = null;
+
+            @Override
+            public boolean hasNext() {
+                if (nextWord != null) {
+                    return true;
+                } else {
+                    nextWord = scanner.next();
+                    return (nextWord != null);
+                }
+            }
+
+            @Override
+            public String next() {
+                if (nextWord != null || hasNext()) {
+                    String line = nextWord;
+                    nextWord = null;
+                    return line;
+                } else {
+                    throw new NoSuchElementException();
+                }
+            }
+        };
+        return StreamSupport.stream(Spliterators.spliteratorUnknownSize(
+                iter, Spliterator.ORDERED | Spliterator.NONNULL), false);
+    }
+
+    public static IntStream scannerToIntegers(Scanner scanner) {
+        Iterator<Integer> iter = new Iterator<Integer>() {
+            int nextInt;
+
+            @Override
+            public boolean hasNext() {
+                nextInt = scanner.nextInt();
+                return (scanner.hasNext());
+            }
+
+            @Override
+            public Integer next() {
+                if (hasNext()) {
+                    return nextInt;
+                } else {
+                    throw new NoSuchElementException();
+                }
+            }
+        };
+        return StreamSupport.intStream(Spliterators.spliteratorUnknownSize((PrimitiveIterator.OfInt) iter, Spliterator.ORDERED | Spliterator.NONNULL), false);
+    }
+
+    public static DoubleStream scannerToDoubles(Scanner scanner) {
+        Iterator<Double> iter = new Iterator<Double>() {
+            double nextDouble;
+
+            @Override
+            public boolean hasNext() {
+                nextDouble = scanner.nextInt();
+                return (scanner.hasNext());
+            }
+
+            @Override
+            public Double next() {
+                if (hasNext()) {
+                    return nextDouble;
+                } else {
+                    throw new NoSuchElementException();
+                }
+            }
+        };
+        return StreamSupport.doubleStream(Spliterators.spliteratorUnknownSize((PrimitiveIterator.OfDouble) iter, Spliterator.ORDERED | Spliterator.NONNULL), false);
+
     }
 
     public static void main(String... args) throws IOException, URISyntaxException {
