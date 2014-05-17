@@ -2,7 +2,10 @@ package org.danielchesters.javase8;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.*;
@@ -181,7 +184,16 @@ public class Chapter8 {
             }
         };
         return StreamSupport.doubleStream(Spliterators.spliteratorUnknownSize((PrimitiveIterator.OfDouble) iter, Spliterator.ORDERED | Spliterator.NONNULL), false);
+    }
 
+    //Exercise 11
+    public static InputStream connect(URL url, String username, String password) throws IOException {
+        byte[] bytes = new String(username + ":" + password).getBytes();
+        URLConnection connection = url.openConnection();
+        Base64.Encoder encoder = Base64.getEncoder();
+        connection.setRequestProperty("Authorization", "Basic " + encoder.encodeToString(bytes));
+        connection.connect();
+        return connection.getInputStream();
     }
 
     public static void main(String... args) throws IOException, URISyntaxException {
