@@ -1,6 +1,5 @@
 package org.danielchesters.javase8;
 
-import java.util.Comparator;
 import java.util.Objects;
 
 /**
