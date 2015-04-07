@@ -136,6 +136,20 @@ public class Chapter1 {
         	this.stream().filter(filter).forEach(action);
         }
     }
+    
+    private static class ArrayList2<E> extends ArrayList<E> implements Collection2<E> {
+		private static final long serialVersionUID = 2365007795434175871L;
+    }
+    
+    public static void exercise9() {
+    	Collection2<String> col = new ArrayList2<>();
+		
+		col.add("Moe");
+		col.add("Larry");
+		col.add("Curly");
+		
+		col.forEachIf(System.out::println, s -> s.endsWith("y"));
+    }
 
     //Exercise 10 : not code
 
@@ -149,6 +163,7 @@ public class Chapter1 {
         exercise6();
         exercise7();
         exercise8();
+    	exercise9();
     }
 
 
