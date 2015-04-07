@@ -130,14 +130,10 @@ public class Chapter1 {
         }
     }
 
-    //Exercise 9 (not usable in this condition)
-    public interface Collection2<E> extends Collection<E> {
-        default void forEachIf(Consumer<E> action, Predicate<E> filter) {
-            forEach(
-                    e -> {
-                        if (filter.test(e)) action.accept(e);
-                    }
-            );
+    //Exercise 9
+    private interface Collection2<E> extends Collection<E> {
+        public default void forEachIf(Consumer<E> action, Predicate<E> filter) {
+        	this.stream().filter(filter).forEach(action);
         }
     }
 
